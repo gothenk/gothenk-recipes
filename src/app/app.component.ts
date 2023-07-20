@@ -8,8 +8,4 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'gothenk-recipes';
   loadedFeature = 'recipe';
-
-  onNavigate(feature: string) {
-    this.loadedFeature = feature;
-  }
 }
