@@ -1,14 +1,18 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from './auth.service';
 import { map, take } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import * as fromApp from '../store/app.reducer';
+import { selectAuth } from './store/auth.selectors';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
   const router = inject(Router);
+  const store = inject(Store<fromApp.AppState>);
 
-  return authService.user.pipe(
+  return store.select(selectAuth).pipe(
     take(1),
+    map((authState) => authState.user),
     map((user) => {
       const isAuth = !!user;
 
